@@ -37,6 +37,8 @@ public class ServerHandler implements Runnable {
                 System.out.println("服务器收到消息：" + expression);
                 try {
                     result = "hello:" + System.currentTimeMillis();
+                    System.out.println("模拟耗时处理");
+                    Thread.sleep(10000);
                 } catch (Exception e) {
                     result = "计算错误：" + e.getMessage();
                 }

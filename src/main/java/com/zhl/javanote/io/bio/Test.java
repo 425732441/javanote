@@ -18,7 +18,7 @@ public class Test {
             @Override
             public void run() {
                 try {
-                    ServerNormal.start();
+                    ServerBetter.start();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -29,21 +29,24 @@ public class Test {
         //运行客户端
         char operators[] = {'+', '-', '*', '/'};
         Random random = new Random(System.currentTimeMillis());
-        new Thread(new Runnable() {
-            @SuppressWarnings("static-access")
-            @Override
-            public void run() {
-                while (true) {
-                    //随机产生算术表达式
-                    String expression = random.nextInt(10) + "" + operators[random.nextInt(4)] + (random.nextInt(10) + 1);
-                    Client.send(expression);
-                    try {
-                        Thread.currentThread().sleep(random.nextInt(10000));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        for (int i = 0; i < 10; i++) {
+            // 模拟10个客户端连接
+            new Thread(new Runnable() {
+                @SuppressWarnings("static-access")
+                @Override
+                public void run() {
+                    while (true) {
+                        //随机产生算术表达式
+                        String expression = random.nextInt(10) + "" + operators[random.nextInt(4)] + (random.nextInt(10) + 1);
+                        Client.send(expression);
+                        try {
+                            Thread.currentThread().sleep(random.nextInt(1000));
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 }
